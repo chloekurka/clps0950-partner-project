@@ -16,9 +16,12 @@ for i = 1:length(file_list)
     file_name = fullfile(directory_name, file_list(i).name);
     text = fileread(file_name);
 
-    %Links the text to the all_text variable
+    %Links the text to the all_text variable and makes it lowercase
     corpus = [corpus, lower(text)];
 end 
+
+%Removes the punctuation from the corpus 
+corpus = regexprep (corpus, '[^a-zA-Z\s]', '') 
 
 
 

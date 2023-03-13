@@ -19,9 +19,3 @@ for i = 1:length(file_list)
     %Links the text to the all_text variable and makes it lowercase
     corpus = [corpus, lower(text)];
 end 
-
-%Removes the punctuation from the corpus 
-corpus = regexprep (corpus, '[^a-zA-Z\s]', '') 
-
-
-

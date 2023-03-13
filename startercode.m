@@ -1,6 +1,8 @@
 % startercode.m
-% Written by Chloe Kurka on March 10/11, 2023
-% This script creates a corpus file of 10 books from the Gutenerg project
+% Written by Chloe Kurka on March 13, 2023
+% This script creates a corpus file of 10 books from the Gutenerg project.
+% The text is in all lowercase and has no punctuation
+% It then displays the top 20 bigrams from this corpus file
 
 directory_name = 'C:\Users\chloe\OneDrive\Desktop\CLPS0950 TXT FILES';
 
@@ -19,3 +21,22 @@ for i = 1:length(file_list)
     %Links the text to the all_text variable and makes it lowercase
     corpus = [corpus, lower(text)];
 end 
+
+%Removes the punctuation from the corpus 
+corpus = regexprep (corpus, '[^a-zA-Z\s]', ''); 
+documents = tokenizedDocument(corpus);
+
+% Split the corpus into individual words. Not sure if this is necessary
+words = strsplit(corpus);
+
+% Generate all possible n-grams
+ngrams = bagOfNgrams(documents,'NgramLengths',2);
+
+% Print the n-grams
+disp(ngrams);
+
+% Creates a table of the top 20 bigrams
+topkngrams(ngrams,20,'NGramLengths',2)
+
+% Count the number of occurances of one n-gram
+count(corpus, "she is")

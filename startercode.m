@@ -43,14 +43,16 @@ ngrams = bagOfNgrams(documents,'NgramLengths',2);
 % STEP 4: Count the frequency of n-gram of interest 
 % Create a map to store the n-gram and their counts (Key = ngram, value = count)
 % This container map is currently empty
-ngram_counts = containers.Map; 
+ngram_counts = containers.Map;
+
+
 
 % Loops from first row to the last row of n-grams
 % size(ngrams,1) is used here to refer to the last row 
 
 for ii = 1:size(ngrams,1)
     % Returns the iith row as a cell array
-    ngram = ngrams {ii,:};
+    ngram = ngrams(ii,:);
 
     % Check if n-gram is already on the map
     % isKey() is a function that checks wether a key (ngram) exists in a map container (ngram_counts)
@@ -63,6 +65,23 @@ for ii = 1:size(ngrams,1)
 end 
 
 %STEP 5: Calculate the probability of each n-gram
+
+% Calculate total count of all n-grams
+total_count = sum(ngrams.Counts);
+
+% Loops over all n-grams and calculates their probabilities
+% Join function should be adding the strings of the bagofNgrams to a new
+% array
+
+ngram_probs = length(ngrams), 1;
+for ii = 1:length(ngrams)
+    ngram = ngrams(ii);
+    ngram_key = join(ngram);
+    ngram_count = count(ngrams, ii);
+    ngram_probs(ii) = ngram_count / total_count;
+end
+
+
 
 %STEP 6: Get the n-gram with the highest probability for the given prefix
 % asking user to write down BLAH

@@ -4,7 +4,7 @@
 % The text is in all lowercase and has no punctuation
 % It then displays the top 20 bigrams from this corpus file
 
-directory_name = 'C:\Users\chloe\OneDrive\Desktop\CLPS0950 TXT FILES';
+directory_name = 'TEXT/';
 
 %STEP 1: Load corpus data 
 % List of all text files in the directory
@@ -48,25 +48,27 @@ ngram_counts = containers.Map;
 % Loops from first row to the last row of n-grams
 % size(ngrams,1) is used here to refer to the last row 
 
-for ii = 1:size(ngrams,1)
+%for ii = 1:size(ngrams,1)
     % Returns the iith row as a cell array
-    ngram = ngrams {ii,:};
+    %ngram = ngrams (ii,:);
 
     % Check if n-gram is already on the map
     % isKey() is a function that checks wether a key (ngram) exists in a map container (ngram_counts)
-    if isKey(ngram_counts, ngram)
+    %if isKey(ngram_counts, ngram)
         ngram_counts(ngram)=ngram_counts(ngram)+1;
-    else 
+    %else 
         % If it is not, add it to the map with a count of 1, so the value increases
         ngram_counts(ngram) = 1; 
-    end 
-end 
+    %end 
+%end 
 
 %STEP 5: Calculate the probability of each n-gram
+
+
 
 %STEP 6: Get the n-gram with the highest probability for the given prefix
 % asking user to write down BLAH
 
 %STEP 7: Display the top most likely word 
  
-disp(ngram-counts)
+disp(ngram_counts)

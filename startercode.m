@@ -52,11 +52,11 @@ ngram_counts = containers.Map;
 
 %for ii = 1:size(ngrams,1)
     % Returns the iith row as a cell array
-<<<<<<< HEAD
+
     %ngram = ngrams (ii,:);
-=======
+
     ngram = ngrams(ii,:);
->>>>>>> f2268d1a58d34bcb2fca6f6ce073449ead4a0c64
+
 
     % Check if n-gram is already on the map
     % isKey() is a function that checks wether a key (ngram) exists in a map container (ngram_counts)
@@ -70,8 +70,8 @@ ngram_counts = containers.Map;
 
 %STEP 5: Calculate the probability of each n-gram
 
-<<<<<<< HEAD
-=======
+
+
 % Calculate total count of all n-grams
 total_count = sum(ngrams.Counts);
 
@@ -87,7 +87,7 @@ for ii = 1:length(ngrams)
     ngram_probs(ii) = ngram_count / total_count;
 end
 
->>>>>>> f2268d1a58d34bcb2fca6f6ce073449ead4a0c64
+
 
 
 %STEP 6: Get the n-gram with the highest probability for the given prefix

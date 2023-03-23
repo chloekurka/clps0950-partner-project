@@ -1,3 +1,5 @@
+% startercode.m
+% Written by Chloe Kurka on March 13, 2023
 % This script creates a corpus file of 10 books from the Gutenerg project.
 % The text is in all lowercase and has no punctuation
 % It then displays the top 20 bigrams from this corpus file
@@ -32,20 +34,17 @@ documents = tokenizedDocument(corpus);
 
 
 % STEP 3: Generate n-grams 
-% Generate all possible n-grams of length n ('ngrams' variable now has a list of unique n-grams)
+% Generate all possible n-grams of length 2 ('ngrams' variable now has a list of unique n-grams)
+% 'bagOfNgrams' function also has the 'count' property 
+% 'count' property creates a vector of integer counts for each n-gram 
 % 'ngrams' is a cell array where each row represents a single n-gram
-n = 2;
-ngrams = bagOfNgrams(documents,'NgramLengths',n);
+ngrams = bagOfNgrams(documents,'NgramLengths',2);
 
-%STEP 4: Count the frequency of n-gram of interest 
+% STEP 4: Count the frequency of n-gram of interest 
+% Create a map to store the n-gram and their counts (Key = ngram, value = count)
+% This container map is currently empty
+ngram_counts = containers.Map;
 
-
-
-%STEP 5: Calculate the probability of each n-gram
-
-
-%STEP 6: Get the n-gram with the highest probability for the given prefix
-% asking user to put in the start of a sentence 
 
 
 
@@ -74,7 +73,8 @@ ngrams = bagOfNgrams(documents,'NgramLengths',n);
 
 
 
-
+% Calculate total count of all n-grams
+total_count = sum(ngrams.Counts);
 
 
 
@@ -83,11 +83,10 @@ ngrams = bagOfNgrams(documents,'NgramLengths',n);
 % Join function should be adding the strings of the bagofNgrams to a new
 % array
 
-% Calculate total count of all n-grams
-%total_count = sum(ngrams.Counts);
-
 %ngram_probs = length(ngrams), 1;
 %for ii = 1:length(ngrams)
+    %ngram = ngrams(ii);
+    %ngram_key = join(ngram);
     %ngram_count = count(ngrams, ii);
     %ngram_probs(ii) = ngram_count / total_count;
 %end
@@ -101,7 +100,7 @@ ngrams = bagOfNgrams(documents,'NgramLengths',n);
 %STEP 7: Display the top most likely word 
  
 
-disp(ngram_counts);
+disp(ngram_counts)
 bags = bagOfNgrams(documents);
 
 % Topkngrams table of 10. Number of ngrams shown in topkngrams table can
@@ -113,7 +112,8 @@ tf = contains(top_ngrams.Ngram, "of");
 
 % Filter the table based on the search results
 result = top_ngrams(tf, :);
-disp(result);
+
+
 
 
 

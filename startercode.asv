@@ -73,7 +73,8 @@ ngram_counts = containers.Map;
 
 
 
-
+% Calculate total count of all n-grams
+total_count = sum(ngrams.Counts);
 
 
 
@@ -82,11 +83,10 @@ ngram_counts = containers.Map;
 % Join function should be adding the strings of the bagofNgrams to a new
 % array
 
-% Calculate total count of all n-grams
-%total_count = sum(ngrams.Counts);
-
 %ngram_probs = length(ngrams), 1;
 %for ii = 1:length(ngrams)
+    %ngram = ngrams(ii);
+    %ngram_key = join(ngram);
     %ngram_count = count(ngrams, ii);
     %ngram_probs(ii) = ngram_count / total_count;
 %end
@@ -100,7 +100,7 @@ ngram_counts = containers.Map;
 %STEP 7: Display the top most likely word 
  
 
-disp(ngram_counts);
+disp(ngram_counts)
 bags = bagOfNgrams(documents);
 
 % Topkngrams table of 10. Number of ngrams shown in topkngrams table can
@@ -112,7 +112,6 @@ tf = contains(top_ngrams.Ngram, "of");
 
 % Filter the table based on the search results
 result = top_ngrams(tf, :);
-disp(result);
 
 
 

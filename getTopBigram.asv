@@ -1,0 +1,15 @@
+function top_bigram = getTopBigram(word, corpus)
+    % Create a bag-of-ngrams model of the corpus
+    bag = bagOfNgrams(corpus, 'NgramLengths', 2);
+    
+    % Find the index of the word in the vocabulary
+    idx = find(contains(bag.Vocabulary, word), 1);
+    
+    % Get the bigram counts for the word
+    bigram_counts = bag.Counts(:, idx);
+    
+    % Get the top bigram
+    ngrams = topkngrams(bag, 1, 'Count', bigram_counts);
+    top_bigram = split(ngrams{1}, " ");
+end
+

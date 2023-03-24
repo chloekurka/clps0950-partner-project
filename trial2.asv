@@ -30,6 +30,8 @@ doc = tokenizedDocument(corpus);
 % Split the corpus into individual words. Not sure if this is necessary
 doc = strsplit(corpus);
 
+
+
 % STEP 2: Generate n-grams
 % Generate all possible n-grams of length 2 ('ngrams' variable now has a list of unique n-grams)
 % 'bagOfNgrams' function also has the 'count' property
@@ -47,54 +49,49 @@ user_input = input('Please enter the beginning of a sentence, please write at le
 user_input = lower(user_input); 
 user_input = regexprep (user_input, '[^a-zA-Z\s]', ''); 
 
-
+top = 10000; 
 %Take last m amount of words 
 m = n-1; 
 words = split(user_input); % Split into individual words
-last_m_words = join(words(end-m+1:end), ' '); % Join last m words with a space separator
+
+last_m_words = words(end-m+1:end); % Join last m words with a space separator
+
+idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1)&topkngrams(ngrams,top).Ngram(:,2)==last_m_words(2));
+
+max_matching_ngram = topkngrams(ngrams,top).Ngram(idx,:);
 
 
-%Find matching n-grams 
-matching_ngrams = ngrams(startsWith(ngrams.Ngrams,last_m_words)); %Filter to only include n-grams that start with last_m_words
-
-if isempty(matching_ngrams)
-    disp('You typed something weird! Try again.')
-    return
-end
+max_matching_freq    = topkngrams(ngrams,top).Count(idx,:);
 
 
-% Find the frequency of each matching n-gram
-matching_ngrams_counts = '';
-matching_ngrams_counts = matching_ngrams.Counts; 
 
-%Find the index of the matchin n-gram with the highest count 
-[~, max_idx] = max(matching_ngrams_counts);
 
-% Get the matching n-gram itself
-max_matching_ngram = matching_ngrams.Ngrams{max_idx};
+%string_last_m_words = strjoin(last_m_words); 
+%
+%
+%
+%%Find matching n-grams 
+%matching_ngrams = ngrams(startsWith(ngrams.Ngrams,string_last_m_words)); %Filter to only include n-grams that start with last_m_words
+%
+%if isempty(matching_ngrams)
+%    disp('You typed something weird! Try again.')
+%    return
+%end
+%
+%
+%% Find the frequency of each matching n-gram
+%matching_ngrams_counts = matching_ngrams.Counts; 
+%
+%%Find the index of the matching n-gram with the highest count 
+%[~, max_idx] = max(matching_ngrams_counts);
+%
+%% Get the matching n-gram itself
+%max_matching_ngram = matching_ngrams.Ngrams{max_idx};
 
 % Display the matching n-gram
-disp(['The most frequent matching n-gram is: ' max_matching_ngram]);
+disp('The most frequent matching n-gram is: ');
+disp(max_matching_ngram);
+disp(max_matching_freq);
 
 
-
-
-
-
-%STEP 4: Calculate the probability of each n-gram
-%matching_ngrams_idx = startsWith
-
-%matching_ngrams_idx = startsWith(ngrams.Ngrams, last_m_words);
-%matching_ngrams = ngrams(matching_ngrams_idx);
-%matching_ngrams_prob = matching_ngrams.Counts ./ sum(matching_ngrams.Counts);
-
-% Find the ngram with the highest probability
-%[~, idx] = max(matching_ngrams_prob);
-
-% Extract the last word of the ngram as the predicted word
-%predicted_word = split(matching_ngrams.Ngrams{idx});
-%predicted_word = predicted_word(end);
-
-% Display the predicted word
-%fprintf('The most likely predicted word is "%s".\n', predicted_word);
 

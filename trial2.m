@@ -37,7 +37,7 @@ doc = strsplit(corpus);
 % 'bagOfNgrams' function also has the 'count' property
 % 'count' property creates a vector of integer counts for each n-gram
 % 'ngrams' is a cell array where each row represents a single n-gram
-n = 3;
+n = 5;
 ngrams = bagOfNgrams(doc,'NgramLengths',n);
 
 %STEP 3: Count the frequency of each n-gram in the corpus
@@ -56,12 +56,23 @@ words = split(user_input); % Split into individual words
 
 last_m_words = words(end-m+1:end); % Join last m words with a space separator
 
-idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1)&topkngrams(ngrams,top).Ngram(:,2)==last_m_words(2));
+
+for i = 1:length(last_m_words)
+    if i == 5
+        idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1) & topkngrams(ngrams, top).Ngram(:,2)==last_m_words(2) & topkngrams(ngrams,top).Ngram(:,3)==last_m_words(3) & topkngrams(ngrams,top).Ngram(:,4)==last_m_words(4) & topkngrams(ngrams, top).Ngram(:, 5)==last_m_words(5));
+    elseif i == 4
+        idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1) & topkngrams(ngrams, top).Ngram(:,2)==last_m_words(2) & topkngrams(ngrams,top).Ngram(:,3)==last_m_words(3) & topkngrams(ngrams,top).Ngram(:,4)==last_m_words(4));
+    elseif i == 3
+        idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1) & topkngrams(ngrams, top).Ngram(:,2)==last_m_words(2) & topkngrams(ngrams,top).Ngram(:,3)==last_m_words(3));
+    elseif i == 2
+        idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1) & topkngrams(ngrams,top).Ngram(:,2)==last_m_words(2));
+    elseif i == 1
+        idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1));
+    end
+end
 
 max_matching_ngram = topkngrams(ngrams,top).Ngram(idx,:);
 
-
-max_matching_freq    = topkngrams(ngrams,top).Count(idx,:);
 
 
 
@@ -91,6 +102,7 @@ max_matching_freq    = topkngrams(ngrams,top).Count(idx,:);
 % Display the matching n-gram
 disp('The most frequent matching n-gram is: ');
 disp(max_matching_ngram);
-disp(max_matching_freq);
+
+
 
 

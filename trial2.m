@@ -37,11 +37,7 @@ doc = strsplit(corpus);
 % 'bagOfNgrams' function also has the 'count' property
 % 'count' property creates a vector of integer counts for each n-gram
 % 'ngrams' is a cell array where each row represents a single n-gram
-n = 5;
-ngrams = bagOfNgrams(doc,'NgramLengths',n);
 
-%STEP 3: Count the frequency of each n-gram in the corpus
-ngrams_freq = ngrams.Counts; 
 
 
 %STEP 4: Ask user to type in the start of a sentence
@@ -50,9 +46,24 @@ user_input = lower(user_input);
 user_input = regexprep (user_input, '[^a-zA-Z\s]', ''); 
 
 top = 10000; 
+
+words = split(user_input); % Split into individual words
+
+if length(words) < 6
+    n = 5; % Use bigrams if the input has less than 3 words
+elseif length(words) < 5
+    n = 4;
+elseif length(words) < 4
+    n = 3; 
+elseif length(words) < 3
+    n = 2; 
+end
+
+ngrams = bagOfNgrams(doc,'NgramLengths',n);
+
 %Take last m amount of words 
 m = n-1; 
-words = split(user_input); % Split into individual words
+
 
 last_m_words = words(end-m+1:end); % Join last m words with a space separator
 

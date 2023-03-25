@@ -1,0 +1,83 @@
+% This script creates a corpus file of 10 books from the Gutenerg project.
+% The text is in all lowercase and has no punctuation
+% It then displays the top 20 bigrams from this corpus file
+
+directory_name = 'TEXT/';
+
+
+    % STEP 1: Load corpus data
+    % List of all text files in the directory
+    file_list = dir(fullfile(directory_name, '*.txt'));
+
+    % Creates empty variable to store the text
+    corpus = '';
+
+    % Loops through each file and links the text together
+    for i = 1:length(file_list)
+        % Reads the file
+        file_name = fullfile(directory_name, file_list(i).name);
+        text = fileread(file_name);
+
+        % Links the text to the all_text variable and makes it lowercase
+        corpus = [corpus, lower(text)];
+    end
+
+    % Removes the punctuation from the corpus
+    corpus = regexprep (corpus, '[^a-zA-Z\s]', '');
+    % Tokenize document: This means that the raw data is converted into a form
+    % that is more easily processed and analysed
+    doc = tokenizedDocument(corpus);
+
+    % Split the corpus into individual words. Not sure if this is necessary
+    doc = strsplit(corpus);
+    
+
+    % STEP 2: Generate n-grams
+    n = 3; % Maximum n-gram length to consider
+    ngrams = bagOfNgrams(doc,'NgramLengths',n);
+
+    %STEP 3: Count the frequency of each n-gram in the corpus
+    ngrams_freq = ngrams.Counts; 
+
+
+    %STEP 4: Ask user to type in the start of a sentence
+    user_input = input('Please enter the beginning of a sentence, please write at least 2 words: ', 's');
+    user_input = lower(user_input); 
+    user_input = regexprep (user_input, '[^a-zA-Z\s]', ''); 
+
+    % Check if user_input has at least 2 words
+    words = split(user_input); % Split into individual words
+    if length(words) < 2
+        disp('Read the instruction! I said at least 2 words!');
+    return
+    end
+
+    %Take the top most likely n-grams 
+    top = 800000; 
+
+    %Take last m amount of words 
+    m = n-1; 
+    words = split(user_input); % Split into individual words
+    last_m_words = words(end-m+1:end); % Join last m words with a space separator
+    idx = find(topkngrams(ngrams,top).Ngram(:,1)==last_m_words(1)&topkngrams(ngrams,top).Ngram(:,2)==last_m_words(2));
+
+    if isempty(idx)
+            disp("Your words are silly. Try again.");
+            return;
+    end
+
+    matching_ngrams = topkngrams(ngrams,top);
+    matching_ngrams = matching_ngrams(matching_ngrams.Ngram(:,1)==last_m_words(1) & matching_ngrams.Ngram(:,2)==last_m_words(2), :);
+    [~, idx] = max(matching_ngrams.Count);
+    max_matching_ngram = matching_ngrams.Ngram(idx,:);
+    max_matching_freq = matching_ngrams.Count(idx,:);
+
+    predicted_word = max_matching_ngram(end);
+
+    disp(predicted_word);
+    disp(max_matching_freq);
+
+
+
+       
+

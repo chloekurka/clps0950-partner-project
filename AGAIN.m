@@ -1,10 +1,6 @@
-% This script creates a corpus file of 10 books from the Gutenerg project.
-% The text is in all lowercase and has no punctuation
-% It then displays the top 20 bigrams from this corpus file
-
 directory_name = 'TEXT/';
 
-
+while true
     % STEP 1: Load corpus data
     % List of all text files in the directory
     file_list = dir(fullfile(directory_name, '*.txt'));
@@ -49,7 +45,7 @@ directory_name = 'TEXT/';
     words = split(user_input); % Split into individual words
     if length(words) < 2
         disp('Read the instruction! I said at least 2 words!');
-    return
+        continue; % Goes back to the beginning of the loop
     end
 
     %Take the top most likely n-grams 
@@ -63,7 +59,7 @@ directory_name = 'TEXT/';
 
     if isempty(idx)
             disp("Your words are silly. Try again.");
-            return;
+            continue; % Goes back to the beginning of the loop
     end
 
     matching_ngrams = topkngrams(ngrams,top);
@@ -74,22 +70,9 @@ directory_name = 'TEXT/';
 
     predicted_word = max_matching_ngram(end);
 
-    % Create the output string
-    output_str = user_input + " "  + predicted_word;
+    disp(predicted_word);
+    disp(max_matching_freq);
 
-    % Calculate the probability of the predicted word
-    prefix_count = sum(matching_ngrams.Count); 
-    prob_output_1 = (max_matching_freq/prefix_count)*100;
-    prob_output_2 = "The probability of the predicted word is"+ " "+ prob_output_1 + "%";
-    
-
-    % Display the output string
-    disp(output_str);
-
-    disp(prob_output_2);
-
-
-
-
-       
-
+    % Breaks out of the loop if a valid input is entered
+    break;
+end

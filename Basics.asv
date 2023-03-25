@@ -79,14 +79,12 @@ directory_name = 'TEXT/';
 
     % Calculate the probability of the predicted word
     prefix_count = sum(matching_ngrams.Count); 
-    prob_output_1 = (max_matching_freq/prefix_count)*100;
-    prob_output_2 = "The probability of the predicted word is"+ " "+ prob_output_1 + "%";
-    
+    prob_output = max_matching_freq/prefix_count
 
     % Display the output string
     disp(output_str);
 
-    disp(prob_output_2);
+    disp(max_matching_freq);
 
 
 
